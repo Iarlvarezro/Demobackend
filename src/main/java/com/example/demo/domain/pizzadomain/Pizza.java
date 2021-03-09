@@ -39,7 +39,7 @@ public class Pizza {
     public void removeIngredient(Ingredient ingredient) {
         this.ingredients.remove(ingredient);
     }
-    
+
     public void setPrice(Double value) {
         this.price = value;
     }

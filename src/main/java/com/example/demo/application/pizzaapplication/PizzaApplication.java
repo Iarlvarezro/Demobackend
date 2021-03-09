@@ -19,7 +19,7 @@ public interface PizzaApplication {
     public CommentDTO addComment(UUID pizzaId, CreateCommentDTO createCommentDTO);
 
     public void removeIngredient(UUID id, UUID ingredientId);
-   
-    // public void addIngredient(UUID id, UUID ingredientId);
-   
+
+    public PizzaDTO addIngredient(UUID id, UUID ingredientId);
+
 }

@@ -23,7 +23,6 @@ public class PizzaApplicationImp implements PizzaApplication {
     private final PizzaRepository pizzaRepository;
     private final IngredientRepository ingredientRepository;
 
-
     @Autowired
     public PizzaApplicationImp(final PizzaRepository pizzaRepository, final IngredientRepository ingredientRepository) {
         this.pizzaRepository = pizzaRepository;
@@ -75,5 +74,13 @@ public class PizzaApplicationImp implements PizzaApplication {
         Pizza pizza = this.pizzaRepository.findById(id).orElseThrow();
         pizza.removeIngredient(ingredient);
         this.pizzaRepository.update(pizza);
+    }
+
+    public PizzaDTO addIngredient(UUID id, UUID ingredientId) {
+        Ingredient ingredient = this.ingredientRepository.findById(ingredientId).orElseThrow();
+        Pizza pizza = this.pizzaRepository.findById(id).orElseThrow();
+        pizza.addIngredient(ingredient);
+        this.pizzaRepository.update(pizza);
+        return PizzaService.createDTO(pizza);
     }
 }
