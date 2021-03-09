@@ -11,7 +11,7 @@ public class CommentService {
         Comment comment = new Comment();
         comment.id = UUID.randomUUID();
         comment.text = dto.text;
-        comment.date = (java.sql.Date) new Date();
+        comment.date = new Date();
         comment.score = dto.score;
         return comment;
     }

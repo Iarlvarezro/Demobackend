@@ -4,9 +4,11 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
@@ -34,6 +36,10 @@ public class Pizza {
         this.comments.add(comment);
     }
 
+    public void removeIngredient(Ingredient ingredient) {
+        this.ingredients.remove(ingredient);
+    }
+    
     public void setPrice(Double value) {
         this.price = value;
     }
@@ -56,6 +62,7 @@ public class Pizza {
     @ManyToMany
     Set<Ingredient> ingredients = new HashSet<Ingredient>();
 
-    @OneToMany
+    @OneToMany (cascade = CascadeType.ALL)
+    @JoinColumn (name = "pizza_id")
     Set<Comment> comments = new HashSet<Comment>();
 }

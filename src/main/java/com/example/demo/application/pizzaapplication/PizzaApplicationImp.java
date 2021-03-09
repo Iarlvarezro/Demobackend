@@ -3,13 +3,13 @@ package com.example.demo.application.pizzaapplication;
 import java.util.UUID;
 
 import com.example.demo.domain.commentdomain.Comment;
-import com.example.demo.domain.commentdomain.CommentRepository;
 import com.example.demo.domain.commentdomain.CommentService;
 import com.example.demo.domain.ingredientdomain.Ingredient;
 import com.example.demo.domain.ingredientdomain.IngredientRepository;
 import com.example.demo.domain.pizzadomain.Pizza;
 import com.example.demo.domain.pizzadomain.PizzaRepository;
 import com.example.demo.domain.pizzadomain.PizzaService;
+import com.example.demo.dto.commentdtos.CommentDTO;
 import com.example.demo.dto.commentdtos.CreateCommentDTO;
 import com.example.demo.dto.pizzadtos.CreateOrUpdatePizzaDTO;
 import com.example.demo.dto.pizzadtos.PizzaDTO;
@@ -22,13 +22,12 @@ public class PizzaApplicationImp implements PizzaApplication {
 
     private final PizzaRepository pizzaRepository;
     private final IngredientRepository ingredientRepository;
-    private final CommentRepository commentRepository;
+
 
     @Autowired
-    public PizzaApplicationImp(final PizzaRepository pizzaRepository, final IngredientRepository ingredientRepository, final CommentRepository commentRepository) {
+    public PizzaApplicationImp(final PizzaRepository pizzaRepository, final IngredientRepository ingredientRepository) {
         this.pizzaRepository = pizzaRepository;
         this.ingredientRepository = ingredientRepository;
-        this.commentRepository = commentRepository;
     }
 
     @Override
@@ -63,11 +62,18 @@ public class PizzaApplicationImp implements PizzaApplication {
         this.pizzaRepository.delete(pizza);
     }
 
-    public void addComment(UUID id, UUID CommentId, CreateCommentDTO commentdto) {
-        Pizza pizza = this.pizzaRepository.findById(id).orElseThrow();
+    public CommentDTO addComment(UUID pizzaId, CreateCommentDTO commentdto) {
+        Pizza pizza = this.pizzaRepository.findById(pizzaId).orElseThrow();
         Comment comment = CommentService.create(commentdto);
-        this.commentRepository.add(comment);
         pizza.addComment(comment);
+        this.pizzaRepository.update(pizza);
+        return CommentService.createDTO(comment);
+    }
 
+    public void removeIngredient(UUID id, UUID ingredientId) {
+        Ingredient ingredient = this.ingredientRepository.findById(ingredientId).orElseThrow();
+        Pizza pizza = this.pizzaRepository.findById(id).orElseThrow();
+        pizza.removeIngredient(ingredient);
+        this.pizzaRepository.update(pizza);
     }
 }
