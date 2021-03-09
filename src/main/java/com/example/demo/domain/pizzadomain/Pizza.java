@@ -30,6 +30,10 @@ public class Pizza {
         this.ingredients.add(ingredient);
     }
 
+    public void addComment(Comment comment) {
+        this.comments.add(comment);
+    }
+
     public void setPrice(Double value) {
         this.price = value;
     }

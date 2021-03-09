@@ -11,7 +11,7 @@ public class IngredientService {
         ingredient.name = dto.name;
         ingredient.price = dto.price;
         ingredient.id = UUID.randomUUID();
-        return ingredient;
+        return ingredient; //va al repositorio
     }
     //crear el output DTO
     public static IngredientDTO createDTO(Ingredient ingredient) {
@@ -19,6 +19,6 @@ public class IngredientService {
         ingredientDTO.id = ingredient.id;
         ingredientDTO.name = ingredient.name;
         ingredientDTO.price = ingredient.price;
-        return ingredientDTO;
+        return ingredientDTO; // ---> controlador
     }
 }

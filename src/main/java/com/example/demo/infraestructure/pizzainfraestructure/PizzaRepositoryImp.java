@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 public class PizzaRepositoryImp implements PizzaRepository{
     
    private final PizzaJPARepository pizzaJPARepository;
+   
    @Autowired
    public PizzaRepositoryImp(final PizzaJPARepository pizzaJPARepository) {
        this.pizzaJPARepository = pizzaJPARepository;

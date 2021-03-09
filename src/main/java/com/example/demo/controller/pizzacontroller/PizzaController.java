@@ -1,9 +1,13 @@
 package com.example.demo.controller.pizzacontroller;
 
-import com.example.demo.application.pizzaapplication.PizzaApplication;
 
+
+import java.util.UUID;
+
+import com.example.demo.application.pizzaapplication.PizzaApplication;
 import com.example.demo.dto.pizzadtos.CreateOrUpdatePizzaDTO;
 import com.example.demo.dto.pizzadtos.PizzaDTO;
+import com.example.demo.dto.commentdtos.CreateCommentDTO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -33,4 +37,9 @@ public class PizzaController {
         return ResponseEntity.status(201).body(pizzaDTO);
     }
 
+    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE, path = "/{id}/comments")
+    public @ResponseBody ResponseEntity<?> addComment(@RequestBody final UUID id, UUID commentId, CreateCommentDTO commentDTO) {
+        PizzaDTO pizzaDTO = this.pizzaApplication.addComment(id, commentId, commentDTO);
+        return ResponseEntity.status(201).body(pizzaDTO);
+    }
 }
