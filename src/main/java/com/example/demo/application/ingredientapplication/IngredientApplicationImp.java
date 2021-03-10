@@ -1,8 +1,10 @@
 package com.example.demo.application.ingredientapplication;
 
+import java.util.List;
 import java.util.UUID;
 
 import com.example.demo.domain.ingredientdomain.Ingredient;
+import com.example.demo.domain.ingredientdomain.IngredientProjection;
 import com.example.demo.domain.ingredientdomain.IngredientRepository;
 import com.example.demo.domain.ingredientdomain.IngredientService;
 import com.example.demo.dto.ingredientdtos.CreateOrUpdateIngredientDTO;
@@ -49,5 +51,9 @@ public class IngredientApplicationImp implements IngredientApplication {
     public void delete(UUID id) {
         Ingredient ingredient = this.ingredientRepository.findById(id).orElseThrow();
         this.ingredientRepository.delete(ingredient);
+    }
+
+    public List<IngredientProjection> getAll(String name,  int page, int size){
+        return this.ingredientRepository.getAll(name, page, size);
     }
 }
