@@ -61,7 +61,7 @@ public class PizzaController {
     }
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE, path = "/{id}/ingredients/{ingredientId}")
-    public ResponseEntity<?> addIngredient(@PathVariable UUID id, @PathVariable UUID ingredientId) {
+    public ResponseEntity<?> addIngredient(@PathVariable UUID id,@PathVariable UUID ingredientId) {
         PizzaDTO pizzadto = this.pizzaApplication.addIngredient(id, ingredientId);
         return ResponseEntity.status(204).body(pizzadto);
     }
