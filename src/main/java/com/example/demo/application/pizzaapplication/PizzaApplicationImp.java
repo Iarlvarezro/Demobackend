@@ -1,5 +1,6 @@
 package com.example.demo.application.pizzaapplication;
 
+import java.util.List;
 import java.util.UUID;
 
 import com.example.demo.domain.commentdomain.Comment;
@@ -7,6 +8,7 @@ import com.example.demo.domain.commentdomain.CommentService;
 import com.example.demo.domain.ingredientdomain.Ingredient;
 import com.example.demo.domain.ingredientdomain.IngredientRepository;
 import com.example.demo.domain.pizzadomain.Pizza;
+import com.example.demo.domain.pizzadomain.PizzaProjection;
 import com.example.demo.domain.pizzadomain.PizzaRepository;
 import com.example.demo.domain.pizzadomain.PizzaService;
 import com.example.demo.dto.commentdtos.CommentDTO;
@@ -61,6 +63,7 @@ public class PizzaApplicationImp implements PizzaApplication {
         this.pizzaRepository.delete(pizza);
     }
 
+    @Override
     public CommentDTO addComment(UUID pizzaId, CreateCommentDTO commentdto) {
         Pizza pizza = this.pizzaRepository.findById(pizzaId).orElseThrow();
         Comment comment = CommentService.create(commentdto);
@@ -69,6 +72,7 @@ public class PizzaApplicationImp implements PizzaApplication {
         return CommentService.createDTO(comment);
     }
 
+    @Override
     public void removeIngredient(UUID id, UUID ingredientId) {
         Ingredient ingredient = this.ingredientRepository.findById(ingredientId).orElseThrow();
         Pizza pizza = this.pizzaRepository.findById(id).orElseThrow();
@@ -76,11 +80,16 @@ public class PizzaApplicationImp implements PizzaApplication {
         this.pizzaRepository.update(pizza);
     }
 
+    @Override
     public PizzaDTO addIngredient(UUID id, UUID ingredientId) {
         Ingredient ingredient = this.ingredientRepository.findById(ingredientId).orElseThrow();
         Pizza pizza = this.pizzaRepository.findById(id).orElseThrow();
         pizza.addIngredient(ingredient);
         this.pizzaRepository.update(pizza);
         return PizzaService.createDTO(pizza);
+    }
+
+    public List<PizzaProjection> getAll(String name, int page, int size) {
+        return this.pizzaRepository.getAll(name, page, size);
     }
 }
