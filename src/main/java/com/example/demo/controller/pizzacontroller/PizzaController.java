@@ -45,11 +45,11 @@ public class PizzaController {
         return ResponseEntity.status(201).body(commentDTO);
     }
 
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, path = "/{id}")
-    public ResponseEntity<?> get(@PathVariable UUID id) {
-        PizzaDTO pizzadto = this.pizzaApplication.get(id);
-        return ResponseEntity.ok(pizzadto);
-    }
+    // @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, path = "/{id}")
+    // public ResponseEntity<?> get(@PathVariable UUID id) {
+    //     PizzaDTO pizzadto = this.pizzaApplication.get(id);
+    //     return ResponseEntity.ok(pizzadto);
+    // }
 
     @DeleteMapping(path = "/{id}")
     public ResponseEntity<?> delete(@PathVariable UUID id) {
@@ -78,15 +78,10 @@ public class PizzaController {
         return ResponseEntity.status(200).body(this.pizzaApplication.getAll(name, page, size));
     }
 
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, path = "/{id}/ingredients")
-    public ResponseEntity<?> getIngredientPrice(@PathVariable UUID id) {
-        PizzaDTO pizzadto = this.pizzaApplication.getIngredientPrice(id);
-        return ResponseEntity.ok(pizzadto);
-    }
-
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, path = "/{id}/comments")
-    public ResponseEntity<?> getPizzaComment(@PathVariable UUID id) {
-        PizzaDTO pizzadto = this.pizzaApplication.getPizzaComment(id);
-        return ResponseEntity.ok(pizzadto);
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, path = "/{id}")
+    public ResponseEntity<?> getPizzaInfo(
+        @PathVariable UUID id
+    ){
+        return ResponseEntity.status(200).body(this.pizzaApplication.getPizzaInfo(id));
     }
 }

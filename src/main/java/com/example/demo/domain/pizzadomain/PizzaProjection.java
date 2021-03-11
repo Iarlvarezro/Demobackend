@@ -9,4 +9,8 @@ public interface PizzaProjection {
     String getName();
 
     public Double getPrice();
+
+    //TO DO: embedded image
+
+    
 }

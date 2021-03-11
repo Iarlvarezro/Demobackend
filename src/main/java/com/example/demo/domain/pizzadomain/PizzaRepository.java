@@ -10,4 +10,5 @@ public interface PizzaRepository {
     public void update(Pizza pizza);
     public void delete(Pizza pizza);
     public List<PizzaProjection> getAll(String name, int page, int size);
+    public PizzaIngredientProjection getPizzaInfo(UUID id);
 }

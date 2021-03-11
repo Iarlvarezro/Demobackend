@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.UUID;
 
 import com.example.demo.domain.pizzadomain.Pizza;
+import com.example.demo.domain.pizzadomain.PizzaIngredientProjection;
 import com.example.demo.domain.pizzadomain.PizzaProjection;
 
 import org.springframework.data.domain.Pageable;
@@ -16,6 +17,11 @@ public interface PizzaJPARepository extends JpaRepository<Pizza, UUID> {
     List<PizzaProjection> findByCriteria(
         @Param("name") String name,
         Pageable pageable
+    );
+
+    @Query("SELECT p FROM Pizza p WHERE id = :id")
+    PizzaIngredientProjection findByPizzaId(
+        @Param("id") UUID id
     );
 
 }

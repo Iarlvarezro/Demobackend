@@ -5,6 +5,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 import com.example.demo.domain.pizzadomain.Pizza;
+import com.example.demo.domain.pizzadomain.PizzaIngredientProjection;
 import com.example.demo.domain.pizzadomain.PizzaProjection;
 import com.example.demo.domain.pizzadomain.PizzaRepository;
 
@@ -48,6 +49,13 @@ public class PizzaRepositoryImp implements PizzaRepository{
        return this.pizzaJPARepository.findByCriteria(
            name,
            PageRequest.of(page, size, Sort.by("name").descending())
+       );
+    }
+
+    @Override
+    public PizzaIngredientProjection getPizzaInfo(UUID id) {
+        return this.pizzaJPARepository.findByPizzaId(
+           id
        );
     }
 }

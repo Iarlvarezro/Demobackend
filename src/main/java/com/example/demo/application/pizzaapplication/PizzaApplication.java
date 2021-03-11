@@ -3,6 +3,7 @@ package com.example.demo.application.pizzaapplication;
 import java.util.List;
 import java.util.UUID;
 
+import com.example.demo.domain.pizzadomain.PizzaIngredientProjection;
 import com.example.demo.domain.pizzadomain.PizzaProjection;
 import com.example.demo.dto.commentdtos.CommentDTO;
 import com.example.demo.dto.commentdtos.CreateCommentDTO;
@@ -26,8 +27,6 @@ public interface PizzaApplication {
 
     public List<PizzaProjection> getAll(String name, int page, int size);
 
-    public PizzaDTO getIngredientPrice(UUID id);
-
-    public PizzaDTO getPizzaComment(UUID id);
+    public PizzaIngredientProjection getPizzaInfo(UUID id);
 
 }

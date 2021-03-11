@@ -3,11 +3,13 @@ package com.example.demo.application.pizzaapplication;
 import java.util.List;
 import java.util.UUID;
 
+
 import com.example.demo.domain.commentdomain.Comment;
 import com.example.demo.domain.commentdomain.CommentService;
 import com.example.demo.domain.ingredientdomain.Ingredient;
 import com.example.demo.domain.ingredientdomain.IngredientRepository;
 import com.example.demo.domain.pizzadomain.Pizza;
+import com.example.demo.domain.pizzadomain.PizzaIngredientProjection;
 import com.example.demo.domain.pizzadomain.PizzaProjection;
 import com.example.demo.domain.pizzadomain.PizzaRepository;
 import com.example.demo.domain.pizzadomain.PizzaService;
@@ -94,13 +96,7 @@ public class PizzaApplicationImp implements PizzaApplication {
     }
 
     @Override
-    public PizzaDTO getIngredientPrice(UUID id) {
-        Pizza pizza = this.pizzaRepository.findById(id).orElseThrow();
-        return PizzaService.createDTOPrice(pizza);
-    }
-    @Override
-    public PizzaDTO getPizzaComment(UUID id) {
-        Pizza pizza = this.pizzaRepository.findById(id).orElseThrow();
-        return PizzaService.createDTOComment(pizza);
+    public PizzaIngredientProjection getPizzaInfo(UUID id) {
+        return this.pizzaRepository.getPizzaInfo(id);
     }
 }
