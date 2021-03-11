@@ -61,6 +61,7 @@ public class Pizza {
 
     @ManyToMany
     Set<Ingredient> ingredients = new HashSet<Ingredient>();
+    
 
     @OneToMany (cascade = CascadeType.ALL)
     @JoinColumn (name = "pizza_id")

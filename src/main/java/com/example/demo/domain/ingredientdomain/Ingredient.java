@@ -19,6 +19,6 @@ public class Ingredient {
     public String name;
 
     @Column (nullable = false)
-    public double price;
+    public Double price;
 
 }

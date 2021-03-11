@@ -26,4 +26,8 @@ public interface PizzaApplication {
 
     public List<PizzaProjection> getAll(String name, int page, int size);
 
+    public PizzaDTO getIngredientPrice(UUID id);
+
+    public PizzaDTO getPizzaComment(UUID id);
+
 }

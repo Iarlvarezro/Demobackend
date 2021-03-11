@@ -10,4 +10,5 @@ public class PizzaDTO {
     public String name;
     public Double price;
     public Set<PizzaIngredientDTO> ingredients = new HashSet<PizzaIngredientDTO>();
+    public Set<PizzaCommentDTO> comments = new HashSet<PizzaCommentDTO>();
 }

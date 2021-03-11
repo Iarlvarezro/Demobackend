@@ -92,4 +92,15 @@ public class PizzaApplicationImp implements PizzaApplication {
     public List<PizzaProjection> getAll(String name, int page, int size) {
         return this.pizzaRepository.getAll(name, page, size);
     }
+
+    @Override
+    public PizzaDTO getIngredientPrice(UUID id) {
+        Pizza pizza = this.pizzaRepository.findById(id).orElseThrow();
+        return PizzaService.createDTOPrice(pizza);
+    }
+    @Override
+    public PizzaDTO getPizzaComment(UUID id) {
+        Pizza pizza = this.pizzaRepository.findById(id).orElseThrow();
+        return PizzaService.createDTOComment(pizza);
+    }
 }
