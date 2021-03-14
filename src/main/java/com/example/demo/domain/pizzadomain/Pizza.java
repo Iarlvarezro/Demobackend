@@ -6,6 +6,7 @@ import java.util.UUID;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -25,8 +26,11 @@ public class Pizza {
 
     @Column(nullable = false)
     public String name;
-    // Pasar price a privado y eliminar la columna
+
     private Double price;
+
+    @Embedded
+    private Image image;
 
     public void addIngredient(Ingredient ingredient) {
         this.ingredients.add(ingredient);
@@ -44,7 +48,6 @@ public class Pizza {
         this.price = value;
     }
 
-    // agregar la columna al getter y poner el nombre
     @Column(nullable = false, name = "price")
     public Double getPrice() {
         return price;
@@ -61,9 +64,8 @@ public class Pizza {
 
     @ManyToMany
     Set<Ingredient> ingredients = new HashSet<Ingredient>();
-    
 
-    @OneToMany (cascade = CascadeType.ALL)
-    @JoinColumn (name = "pizza_id")
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "pizza_id")
     Set<Comment> comments = new HashSet<Comment>();
 }

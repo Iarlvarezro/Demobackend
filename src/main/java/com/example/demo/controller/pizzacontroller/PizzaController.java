@@ -1,10 +1,20 @@
 package com.example.demo.controller.pizzacontroller;
 
+import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.net.http.HttpClient.Version;
+import java.net.http.HttpRequest.BodyPublishers;
 import java.util.UUID;
 
 import com.example.demo.application.pizzaapplication.PizzaApplication;
 import com.example.demo.dto.pizzadtos.CreateOrUpdatePizzaDTO;
+import com.example.demo.dto.pizzadtos.ImageDTO;
 import com.example.demo.dto.pizzadtos.PizzaDTO;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.example.demo.dto.commentdtos.CommentDTO;
 import com.example.demo.dto.commentdtos.CreateCommentDTO;
 
@@ -83,5 +93,26 @@ public class PizzaController {
         @PathVariable UUID id
     ){
         return ResponseEntity.status(200).body(this.pizzaApplication.getPizzaInfo(id));
+    }
+
+    @PostMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> create(@PathVariable("id") UUID id) throws JsonProcessingException, IOException, InterruptedException {
+        ImageDTO dto = new ImageDTO(id);
+        ObjectMapper mapper = new ObjectMapper();
+        String json = mapper.writeValueAsString(dto);
+        HttpRequest request = HttpRequest
+            .newBuilder()
+            .uri(URI.create("http://localhost:8081/save"))
+            .header("Content-Type", "application/json")
+            .POST(BodyPublishers.ofString(json))
+            .build();
+
+        HttpClient httpClient = HttpClient
+            .newBuilder()
+            .version(Version.HTTP_1_1)
+            .build();
+            
+        HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+        return ResponseEntity.status(201).body(response.body());
     }
 }

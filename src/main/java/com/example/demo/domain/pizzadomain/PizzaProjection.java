@@ -10,7 +10,7 @@ public interface PizzaProjection {
 
     public Double getPrice();
 
-    //TO DO: embedded image
+    public UUID getImage();
 
     
 }

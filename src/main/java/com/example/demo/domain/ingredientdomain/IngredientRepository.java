@@ -9,6 +9,6 @@ public interface IngredientRepository {
     public Optional<Ingredient> findById(UUID id);
     public void update(Ingredient ingredient);
     public void delete(Ingredient ingredient);
-    public List<IngredientProjection> getAll(String name,  int page, int size);
+    public List<IngredientProjection> getAll(String name, int page, int size);
 }
 // Dominio -> infraestructura(repositorio) -> Dtos -> Servicio(Aplicacion) -> controlador
