@@ -102,7 +102,7 @@ public class PizzaController {
         String json = mapper.writeValueAsString(dto);
         HttpRequest request = HttpRequest
             .newBuilder()
-            .uri(URI.create("http://localhost:8081/save"))
+            .uri(URI.create("http://localhost:8080/save"))
             .header("Content-Type", "application/json")
             .POST(BodyPublishers.ofString(json))
             .build();

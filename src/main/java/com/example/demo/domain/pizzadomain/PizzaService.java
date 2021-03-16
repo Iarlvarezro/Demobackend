@@ -13,6 +13,7 @@ public class PizzaService {
         Pizza pizza = new Pizza();
         pizza.id = UUID.randomUUID();
         pizza.name = dto.name;
+        pizza.description = dto.description;
         return pizza;
     }
 
@@ -21,6 +22,7 @@ public class PizzaService {
         pizzaDTO.id = pizza.id;
         pizzaDTO.name = pizza.name;
         pizzaDTO.price = pizza.getPrice();
+        pizzaDTO.description = pizza.description;
         for (Ingredient ingredient : pizza.ingredients) {
             PizzaIngredientDTO pizzaIngredientDTO = new PizzaIngredientDTO();
             pizzaIngredientDTO.id = ingredient.id;

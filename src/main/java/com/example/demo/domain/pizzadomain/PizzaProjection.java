@@ -1,5 +1,6 @@
 package com.example.demo.domain.pizzadomain;
 
+
 import java.util.UUID;
 
 public interface PizzaProjection {
@@ -10,7 +11,11 @@ public interface PizzaProjection {
 
     public Double getPrice();
 
-    public UUID getImage();
+    public Image getImage();
+
+    public interface Image {
+        public String getUrl();
+    };
 
     
 }

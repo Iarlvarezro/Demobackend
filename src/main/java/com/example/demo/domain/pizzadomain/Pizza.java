@@ -29,8 +29,11 @@ public class Pizza {
 
     private Double price;
 
+    @Column
+    public String description;
+
     @Embedded
-    private Image image;
+    public Image image;
 
     public void addIngredient(Ingredient ingredient) {
         this.ingredients.add(ingredient);

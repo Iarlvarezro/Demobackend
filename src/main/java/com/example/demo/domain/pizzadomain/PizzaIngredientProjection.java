@@ -1,5 +1,6 @@
 package com.example.demo.domain.pizzadomain;
 
+
 import java.util.List;
 import java.util.UUID;
 
@@ -10,6 +11,8 @@ public interface PizzaIngredientProjection {
     public String getName();
 
     public Double getPrice();
+
+    public String getDescription();
 
     public List<Ingredient> getIngredients();
 
