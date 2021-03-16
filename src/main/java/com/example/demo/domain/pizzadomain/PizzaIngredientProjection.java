@@ -18,6 +18,12 @@ public interface PizzaIngredientProjection {
 
     public List<Comment> getComments();
 
+    public Image getImage();
+
+    public interface Image {
+        public String getUrl();
+    };
+
     public interface Ingredient {
 
         public UUID getId();
@@ -34,5 +40,6 @@ public interface PizzaIngredientProjection {
         public int getScore();
 
     }
+
 
 }
