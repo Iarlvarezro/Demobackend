@@ -21,7 +21,7 @@ public interface PizzaIngredientProjection {
     public Image getImage();
 
     public interface Image {
-        public String getUrl();
+        public String getPublic_id();
     };
 
     public interface Ingredient {
