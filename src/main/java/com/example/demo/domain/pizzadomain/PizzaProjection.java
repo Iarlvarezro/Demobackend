@@ -1,6 +1,7 @@
 package com.example.demo.domain.pizzadomain;
 
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
 public interface PizzaProjection {
@@ -9,7 +10,7 @@ public interface PizzaProjection {
 
     String getName();
 
-    public Double getPrice();
+    public BigDecimal getPrice();
 
     public Image getImage();
 

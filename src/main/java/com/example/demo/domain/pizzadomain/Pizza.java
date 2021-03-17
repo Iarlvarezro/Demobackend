@@ -1,5 +1,6 @@
 package com.example.demo.domain.pizzadomain;
 
+import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -27,7 +28,7 @@ public class Pizza {
     @Column(nullable = false)
     public String name;
 
-    private Double price;
+    private BigDecimal price;
 
     @Column
     public String description;
@@ -47,21 +48,22 @@ public class Pizza {
         this.ingredients.remove(ingredient);
     }
 
-    public void setPrice(Double value) {
+    public void setPrice(BigDecimal value) {
         this.price = value;
     }
 
     @Column(nullable = false, name = "price")
-    public Double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public Double calculatePrice() {
-        Double total = 0.0;
+    public BigDecimal calculatePrice() {
+        BigDecimal total = new BigDecimal(0.0);
+        BigDecimal addPrice = new BigDecimal(1.2);
         for (Ingredient ingredient : this.ingredients) {
-            total += ingredient.price;
+            total = total.add(ingredient.price);
         }
-        total = total * 1.2;
+        total = total.multiply(addPrice);
         return total;
     }
 

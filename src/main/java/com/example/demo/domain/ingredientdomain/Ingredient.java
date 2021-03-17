@@ -1,5 +1,6 @@
 package com.example.demo.domain.ingredientdomain;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
 import javax.persistence.Column;
@@ -19,6 +20,6 @@ public class Ingredient {
     public String name;
 
     @Column (nullable = false)
-    public Double price;
+    public BigDecimal price;
 
 }

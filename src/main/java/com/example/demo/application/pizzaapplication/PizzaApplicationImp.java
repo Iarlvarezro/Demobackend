@@ -1,5 +1,6 @@
 package com.example.demo.application.pizzaapplication;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 
@@ -40,7 +41,7 @@ public class PizzaApplicationImp implements PizzaApplication {
             Ingredient ingredient = this.ingredientRepository.findById(ingredientId).orElseThrow();
             pizza.addIngredient(ingredient);
         }
-        Double price = pizza.calculatePrice();
+        BigDecimal price = pizza.calculatePrice();
         pizza.setPrice(price);
         this.pizzaRepository.add(pizza);
         return PizzaService.createDTO(pizza);

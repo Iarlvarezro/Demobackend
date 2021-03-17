@@ -1,6 +1,8 @@
 package com.example.demo.domain.pizzadomain;
 
 
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -10,7 +12,7 @@ public interface PizzaIngredientProjection {
 
     public String getName();
 
-    public Double getPrice();
+    public BigDecimal getPrice();
 
     public String getDescription();
 
@@ -36,6 +38,8 @@ public interface PizzaIngredientProjection {
         public UUID getId();
 
         public String getText();
+
+        public Date getDate();
 
         public int getScore();
 
