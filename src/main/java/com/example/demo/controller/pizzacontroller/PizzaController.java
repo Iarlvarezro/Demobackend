@@ -9,6 +9,8 @@ import java.net.http.HttpClient.Version;
 import java.net.http.HttpRequest.BodyPublishers;
 import java.util.UUID;
 
+import javax.validation.Valid;
+
 import com.example.demo.application.pizzaapplication.PizzaApplication;
 import com.example.demo.dto.pizzadtos.CreateOrUpdatePizzaDTO;
 import com.example.demo.dto.pizzadtos.ImageDTO;
@@ -19,8 +21,10 @@ import com.example.demo.dto.commentdtos.CommentDTO;
 import com.example.demo.dto.commentdtos.CreateCommentDTO;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -50,7 +54,10 @@ public class PizzaController {
     }
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE, path = "/{id}/comments")
-    public ResponseEntity<?> addComment(@PathVariable UUID id, @RequestBody CreateCommentDTO createCommentDTO) {
+    public ResponseEntity<?> addComment(@PathVariable UUID id,  @Valid @RequestBody CreateCommentDTO createCommentDTO, Errors errors) throws NotFoundException {
+        if(errors.hasErrors()){
+            return ResponseEntity.badRequest().body(errors.getFieldErrors());
+        }
         CommentDTO commentDTO = this.pizzaApplication.addComment(id, createCommentDTO);
         return ResponseEntity.status(201).body(commentDTO);
     }

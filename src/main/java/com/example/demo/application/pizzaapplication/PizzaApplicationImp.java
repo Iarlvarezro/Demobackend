@@ -20,7 +20,9 @@ import com.example.demo.dto.pizzadtos.CreateOrUpdatePizzaDTO;
 import com.example.demo.dto.pizzadtos.PizzaDTO;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.stereotype.Service;
+
 
 @Service
 public class PizzaApplicationImp implements PizzaApplication {
@@ -67,8 +69,8 @@ public class PizzaApplicationImp implements PizzaApplication {
     }
 
     @Override
-    public CommentDTO addComment(UUID pizzaId, CreateCommentDTO commentdto) {
-        Pizza pizza = this.pizzaRepository.findById(pizzaId).orElseThrow();
+    public CommentDTO addComment(UUID pizzaId, CreateCommentDTO commentdto) throws NotFoundException {
+        Pizza pizza = this.pizzaRepository.findById(pizzaId).orElseThrow(() -> new NotFoundException());
         Comment comment = CommentService.create(commentdto);
         pizza.addComment(comment);
         this.pizzaRepository.update(pizza);
