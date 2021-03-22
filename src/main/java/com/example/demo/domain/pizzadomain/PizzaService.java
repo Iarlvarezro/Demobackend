@@ -9,11 +9,13 @@ import com.example.demo.dto.pizzadtos.PizzaIngredientDTO;
 
 
 public class PizzaService {
-    public static Pizza create(CreateOrUpdatePizzaDTO dto) {
+    public static Pizza create(CreateOrUpdatePizzaDTO dto, String public_id) {
         Pizza pizza = new Pizza();
         pizza.id = UUID.randomUUID();
         pizza.name = dto.name;
         pizza.description = dto.description;
+        pizza.image = new Image();
+        pizza.image.public_id = public_id;
         return pizza;
     }
 

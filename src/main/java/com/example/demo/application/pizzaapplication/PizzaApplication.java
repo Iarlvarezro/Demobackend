@@ -10,7 +10,6 @@ import com.example.demo.dto.commentdtos.CreateCommentDTO;
 import com.example.demo.dto.pizzadtos.CreateOrUpdatePizzaDTO;
 import com.example.demo.dto.pizzadtos.PizzaDTO;
 
-import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 
 public interface PizzaApplication {
     public PizzaDTO add(CreateOrUpdatePizzaDTO dto);
@@ -21,7 +20,7 @@ public interface PizzaApplication {
 
     public void delete(UUID id);
 
-    public CommentDTO addComment(UUID pizzaId, CreateCommentDTO createCommentDTO) throws NotFoundException;
+    public CommentDTO addComment(UUID pizzaId, CreateCommentDTO createCommentDTO);
 
     public void removeIngredient(UUID id, UUID ingredientId);
 

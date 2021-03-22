@@ -12,6 +12,7 @@ import java.util.UUID;
 import javax.validation.Valid;
 
 import com.example.demo.application.pizzaapplication.PizzaApplication;
+import com.example.demo.controller.interceptors.LoginRequired;
 import com.example.demo.dto.pizzadtos.CreateOrUpdatePizzaDTO;
 import com.example.demo.dto.pizzadtos.ImageDTO;
 import com.example.demo.dto.pizzadtos.PizzaDTO;
@@ -21,7 +22,6 @@ import com.example.demo.dto.commentdtos.CommentDTO;
 import com.example.demo.dto.commentdtos.CreateCommentDTO;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
@@ -47,14 +47,18 @@ public class PizzaController {
 
     }
 
+    @LoginRequired
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> create(@RequestBody final CreateOrUpdatePizzaDTO dto) {
+    public ResponseEntity<?> create(@Valid @RequestBody final CreateOrUpdatePizzaDTO dto, Errors errors) {
+        if(errors.hasErrors()){
+            return ResponseEntity.badRequest().body(errors.getFieldErrors());
+        }
         PizzaDTO pizzaDTO = this.pizzaApplication.add(dto);
         return ResponseEntity.status(201).body(pizzaDTO);
     }
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE, path = "/{id}/comments")
-    public ResponseEntity<?> addComment(@PathVariable UUID id,  @Valid @RequestBody CreateCommentDTO createCommentDTO, Errors errors) throws NotFoundException {
+    public ResponseEntity<?> addComment(@PathVariable UUID id,  @Valid @RequestBody CreateCommentDTO createCommentDTO, Errors errors) {
         if(errors.hasErrors()){
             return ResponseEntity.badRequest().body(errors.getFieldErrors());
         }
@@ -68,18 +72,21 @@ public class PizzaController {
     //     return ResponseEntity.ok(pizzadto);
     // }
 
+    @LoginRequired
     @DeleteMapping(path = "/{id}")
     public ResponseEntity<?> delete(@PathVariable UUID id) {
         this.pizzaApplication.delete(id);
         return ResponseEntity.status(204).body("");
     }
 
+    @LoginRequired
     @DeleteMapping(path = "/{id}/ingredients/")
     public ResponseEntity<?> removeIngredient(@PathVariable UUID id, UUID ingredientId) {
         this.pizzaApplication.removeIngredient(id, ingredientId);
         return ResponseEntity.status(204).body("");
     }
 
+    @LoginRequired
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE, path = "/{id}/ingredients/{ingredientId}")
     public ResponseEntity<?> addIngredient(@PathVariable UUID id,@PathVariable UUID ingredientId) {
         PizzaDTO pizzadto = this.pizzaApplication.addIngredient(id, ingredientId);
@@ -102,6 +109,8 @@ public class PizzaController {
         return ResponseEntity.status(200).body(this.pizzaApplication.getPizzaInfo(id));
     }
 
+    // TODO
+    @LoginRequired
     @PostMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> create(@PathVariable("id") UUID id) throws JsonProcessingException, IOException, InterruptedException {
         ImageDTO dto = new ImageDTO(id);

@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 
@@ -23,26 +22,26 @@ import org.springframework.core.annotation.Order;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
-@Component
-@Order(1)
-public class TransactionFilter implements Filter {
+// @Component
+// @Order(1)
+public class JwtFilter implements Filter {
 
   @Autowired
   private Environment environment;
 
   @Override
   public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
-    // HttpServletRequest request  = (HttpServletRequest) req;
-    // String authorization = request.getHeader("Authorization");
-    // if(!this.isAuthorizationBearer(authorization)){
-    //   this.unauthorize(res);
-    //   return;
-    // }
-    // String token = this.getToken(authorization);
-    // if(!this.verify(token)){
-    //   this.unauthorize(res);
-    //   return;
-    // }
+    HttpServletRequest request  = (HttpServletRequest) req;
+    String authorization = request.getHeader("Authorization");
+    if(!this.isAuthorizationBearer(authorization)){
+      this.unauthorize(res);
+      return;
+    }
+    String token = this.getToken(authorization);
+    if(!this.verify(token)){
+      this.unauthorize(res);
+      return;
+    }
     chain.doFilter(req, res);
   }
 

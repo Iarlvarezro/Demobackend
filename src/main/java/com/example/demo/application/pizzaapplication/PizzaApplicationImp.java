@@ -1,9 +1,9 @@
 package com.example.demo.application.pizzaapplication;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
-
 
 import com.example.demo.domain.commentdomain.Comment;
 import com.example.demo.domain.commentdomain.CommentService;
@@ -17,28 +17,43 @@ import com.example.demo.domain.pizzadomain.PizzaService;
 import com.example.demo.dto.commentdtos.CommentDTO;
 import com.example.demo.dto.commentdtos.CreateCommentDTO;
 import com.example.demo.dto.pizzadtos.CreateOrUpdatePizzaDTO;
+import com.example.demo.dto.pizzadtos.ImageDTO;
 import com.example.demo.dto.pizzadtos.PizzaDTO;
+import com.example.demo.errors.NotFoundException;
+import com.example.demo.infraestructure.ImageRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.stereotype.Service;
-
 
 @Service
 public class PizzaApplicationImp implements PizzaApplication {
 
     private final PizzaRepository pizzaRepository;
     private final IngredientRepository ingredientRepository;
+    private final ImageRepository imageRepository;
 
     @Autowired
-    public PizzaApplicationImp(final PizzaRepository pizzaRepository, final IngredientRepository ingredientRepository) {
+    public PizzaApplicationImp(final PizzaRepository pizzaRepository, final IngredientRepository ingredientRepository,
+            final ImageRepository imageRepository) {
         this.pizzaRepository = pizzaRepository;
         this.ingredientRepository = ingredientRepository;
+        this.imageRepository = imageRepository;
     }
 
     @Override
     public PizzaDTO add(CreateOrUpdatePizzaDTO pizzadto) {
-        Pizza pizza = PizzaService.create(pizzadto);
+        String public_id = "";
+        try {
+            public_id = this.imageRepository.create(new ImageDTO(pizzadto.image));
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        Pizza pizza = PizzaService.create(pizzadto, public_id);
         for (UUID ingredientId : pizzadto.ingredients) {
             Ingredient ingredient = this.ingredientRepository.findById(ingredientId).orElseThrow();
             pizza.addIngredient(ingredient);
@@ -69,7 +84,7 @@ public class PizzaApplicationImp implements PizzaApplication {
     }
 
     @Override
-    public CommentDTO addComment(UUID pizzaId, CreateCommentDTO commentdto) throws NotFoundException {
+    public CommentDTO addComment(UUID pizzaId, CreateCommentDTO commentdto) {
         Pizza pizza = this.pizzaRepository.findById(pizzaId).orElseThrow(() -> new NotFoundException());
         Comment comment = CommentService.create(commentdto);
         pizza.addComment(comment);
